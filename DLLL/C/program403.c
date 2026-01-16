@@ -189,6 +189,7 @@ void DeleteAtPos(PPNODE first, int pos)
     int iCnt = 0;
 
     PNODE temp = NULL;
+    PNODE target = NULL;
 
     iSize = Count(*first);
 
@@ -214,6 +215,13 @@ void DeleteAtPos(PPNODE first, int pos)
         {
             temp = temp->next;
         }
+
+        target = temp->next;
+
+        temp->next = target->next;      // 1
+        temp->next->prev = temp;        // 2        $
+
+        free(target);
     }
 }
 
@@ -261,7 +269,12 @@ int main()
     iRet = Count(head);
     printf("Number of nodes are : %d\n",iRet);
 
+    DeleteAtPos(&head,3);
+    
+    Display(head);
+    
+    iRet = Count(head);
+    printf("Number of nodes are : %d\n",iRet);
+
     return 0;
 }
-
-
